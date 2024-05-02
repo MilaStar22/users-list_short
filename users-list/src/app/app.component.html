@@ -1,1 +1,12 @@
-<h1>Hello</h1>
+<h2>List of items</h2>
+<hr>
+<div class="check-box-container">
+  <mat-selection-list #shoes>
+    @for (shoe of typesOfShoes; track shoe) {
+      <mat-list-option>{{shoe}}</mat-list-option>
+    }
+  </mat-selection-list>
+  <p>
+    Options selected: {{shoes.selectedOptions.selected.length}}
+  </p>
+</div>
