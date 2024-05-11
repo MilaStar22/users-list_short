@@ -1,16 +1,42 @@
 <h2>List of users</h2>
 <hr>
 <div class="check-box-container">
-  <mat-selection-list #users>
-    @for (user of usersList; track user; let i = $index) {
-      <mat-list-option>
-        <h3>{{ user.name }}</h3>
-        <p>{{ user.email }}</p>
-        <hr>
-      </mat-list-option>
-    }
-  </mat-selection-list>
-  <p class="selected" >
-    Users selected: {{users.selectedOptions.selected.length}}
-  </p>
+  <!-- # (#name, #users) selector helps mark some element in DOM and used default values -->
+  <!-- <input #name type="text">
+  <h2>{{name.value}}</h2> -->
+
+  <div class="sorting-selection-container">
+    <h4>Choose sorting method:</h4>
+    <mat-form-field>
+      <mat-label>Sort by</mat-label>
+      <mat-select #sortList (selectionChange)="sortByMethod(sortList.value)">
+        @for (food of foods; track food) {
+          <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Find user" #inputValue (keyup.enter)="search(inputValue.value)">
+        <mat-icon matSuffix (click)="search(inputValue.value)">search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+
+  @if(usersList && usersList.length > 0) {
+    <div class="users-list" #userslist>
+      @for (user of usersList; track user; let i = $index) {
+        <ul>
+          <li [style.color]="i % 2 === 1 ? 'red' : 'black'">{{user.name}}</li>
+          <li>{{user.username}}</li>
+        </ul>
+      }
+    </div>
+  } @else {
+    <p>No user found. Try to change searh combination. </p>
+  }
 </div>
